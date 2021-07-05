@@ -82,4 +82,10 @@ class TransactionController extends Controller
     {
         //
     }
+
+    public function transactions() {
+        $transactions = Transaction::with('sourceable')->get();
+        return view('transactions')->with('transactions', $transactions);
+    }
+
 }

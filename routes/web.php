@@ -18,5 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/organisations','App\Http\Controllers\OrganisationController@organisations')->name('organisations');
+
+Route::get('/missions','App\Http\Controllers\MissionController@missions')->name('missions');
+
+Route::get('/missionLines','App\Http\Controllers\MissionLineController@missionLines')->name('missionLines');
+
 Route::get('/contributions', 'App\Http\Controllers\ContributionController@contributions')->name('contributions');
-//Route::get('/organisations','App\Http\Controllers\OrganisationController@organisations')->name('organisations');
+
+Route::get('/transactions', 'App\Http\Controllers\TransactionController@transactions')->name('transactions');

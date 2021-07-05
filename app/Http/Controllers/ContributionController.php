@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class ContributionController extends Controller
 {
+
+    public function contributions() {
+        $contributions = Contribution::with('organisation')->get();
+        return view('contributions')->with('contributions', $contributions);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -81,10 +87,5 @@ class ContributionController extends Controller
     public function destroy(Contribution $contribution)
     {
         //
-    }
-
-    public function contributions() {
-        $contributions = Contribution::with('organisation')->get();
-        return view('contributions')->with('contributions',$contributions);
     }
 }

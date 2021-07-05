@@ -22,7 +22,7 @@ class Contribution extends Model
     ];
 
     public function organisation() {
-        return $this->belongsToMany(Organisation::class);
+        return $this->belongsTo(Organisation::class);
     }
 
     public function source() {

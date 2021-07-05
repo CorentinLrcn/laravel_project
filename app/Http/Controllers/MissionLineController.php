@@ -82,4 +82,10 @@ class MissionLineController extends Controller
     {
         //
     }
+
+    public function missionLines() {
+        $missionLines = MissionLine::with('mission')->get();
+        return view('missionLines')->with('missionLines', $missionLines);
+    }
+
 }

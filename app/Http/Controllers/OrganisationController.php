@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class OrganisationController extends Controller
 {
+
+    public function organisations() {
+        $organisations = Organisation::all();
+        return view('organisations')->with('organisations', $organisations);
+    }
+
     /**
      * Display a listing of the resource.
      *

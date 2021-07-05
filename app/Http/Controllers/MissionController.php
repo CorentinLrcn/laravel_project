@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class MissionController extends Controller
 {
+
+    public function missions() {
+        $missions = Mission::with('organisation')->get();
+        return view('missions')->with('missions', $missions);
+    }
+
     /**
      * Display a listing of the resource.
      *
