@@ -88,4 +88,18 @@ class OrganisationController extends Controller
     {
         //
     }
+
+    public function addOrganisation() {
+        $organisation = new Organisation;
+        $organisation->name = request('name');
+        $organisation->slug = request('slug');
+        $organisation->email = request('email');
+        $organisation->tel = request('tel');
+        $organisation->address = request('address');
+        $organisation->type = request('type');
+    
+        $organisation->save();
+    
+        return 'Votre organisation est enregistrée';
+    }
 }
