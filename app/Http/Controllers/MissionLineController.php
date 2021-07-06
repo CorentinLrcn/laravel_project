@@ -105,6 +105,6 @@ class MissionLineController extends Controller
 
     public function voirLignesMission() {
         $missionLines = MissionLine::where('mission_id', request('id'))->get();
-        return view('voirMissionLines')->with('missionLines', $missionLines);
+        return view('voirMissionLines')->with(['missionLines' => $missionLines, 'mission_id' => request('id')]);
     }
 }
