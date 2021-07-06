@@ -97,7 +97,7 @@ class MissionController extends Controller
 
     public function voirMissionForId () {
         $missionsForId = Mission::all()->where('organisation_id', request('id'));
-        return view('voirMissionsForId')->with('missionsForId', $missionsForId);
+        return view('voirMissionsForId')->with(['missionsForId' => $missionsForId, 'organisation_id' => request('id')]);
     }
 
     public function getInfoMissionForDevis() {

@@ -51,20 +51,14 @@
             padding: 1.25% 0;
         }
 
-        .orga {
-            width: 15%;
-        }
-
-        .slug {
-            width: 20%;
-        }
-
-        .address {
-            width: 20%;
-        }
-
+        .orga,
         .type {
             width: 15%;
+        }
+
+        .slug,
+        .address {
+            width: 20%;
         }
 
         .option {
@@ -72,7 +66,7 @@
         }
 
         table button {
-            padding: 2.5% 5%;
+            padding: 1.6% 3.3%;
             border-radius: 5px;
             background-color: white;
         }
@@ -80,6 +74,8 @@
         .edit {
             border: 2px solid orange;
             color: orange;
+            margin-left: 5%;
+            margin-right: 5%;
         }
 
         .edit:hover {
@@ -90,8 +86,6 @@
 
         .delete {
             border: 2px solid red;
-            margin-left: 5%;
-            margin-right: 5%;
             color: red;
         }
 
@@ -132,10 +126,9 @@
             <td class="address">{{ $organisation->address }}</td>
             <td class="type">{{ $organisation->type }}</td>
             <td class="option">
+                <button class="listMission" onclick="window.location.href = '/organisations/missions/{{$organisation->id}}'">Voir missions</button>
                 <button class="edit" onclick="">Éditer</button>
                 <button class="delete" onclick="">Supprimer</button>
-                <!--button class="" onclick="window.location.href = '/organisations/ajoutMissions/{{$organisation->id}}'">Ajout de missions</button-->
-                <button class="listMission" onclick="window.location.href = '/organisations/missions/{{$organisation->id}}'">Voir missions</button>
             </td>
         </tr>
         @endforeach
