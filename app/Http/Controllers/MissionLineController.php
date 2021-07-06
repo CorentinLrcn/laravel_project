@@ -83,9 +83,28 @@ class MissionLineController extends Controller
         //
     }
 
-    public function missionLines() {
+    public function missionLines()
+    {
         $missionLines = MissionLine::with('mission')->get();
         return view('missionLines')->with('missionLines', $missionLines);
     }
 
+    public function ajoutLignesMission()
+    {
+        $missionLines = new MissionLine;
+        $missionLines->mission_id = request('id');
+        $missionLines->title = request('title');
+        $missionLines->quantity = request('quantity');
+        $missionLines->price = request('price');
+        $missionLines->unity = request('unity');
+
+        $missionLines->save();
+
+        return 'Ligne de mission ajoutée';
+    }
+
+    public function voirLignesMission() {
+        $missionLines = MissionLine::where('mission_id', request('id'))->get();
+        return view('voirMissionLines')->with('missionLines', $missionLines);
+    }
 }
