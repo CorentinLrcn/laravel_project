@@ -31,7 +31,7 @@ Route::get('/contributions', 'App\Http\Controllers\ContributionController@contri
 
 Route::get('/transactions', 'App\Http\Controllers\TransactionController@transactions')->name('transactions');
 
-Route::get('/ajoutOrga', function() {
+Route::get('/ajoutOrganisations', function() {
     return view('formAddOrganisation');
 });
 
