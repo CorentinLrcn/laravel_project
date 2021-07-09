@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 class MissionController extends Controller
 {
 
-    public function missions() {
+    public function missions()
+    {
         $missions = Mission::with('organisation')->get();
         return view('missions')->with('missions', $missions);
     }
@@ -25,7 +26,8 @@ class MissionController extends Controller
         //
     }
 
-    public function create() {
+    public function create()
+    {
         $mission = new Mission;
         $mission->reference = request('reference');
         $mission->organisation_id = request('id');
@@ -36,7 +38,9 @@ class MissionController extends Controller
 
         $mission->save();
 
-        return 'Votre mission a bien été ajoutée';        
+        $missionsForId = Mission::all()->where('organisation_id', request('id'));
+
+        return view('voirMissionsForId')->with(['missionsForId' => $missionsForId, 'organisation_id' => request('id')]);
     }
 
     /**
@@ -95,12 +99,14 @@ class MissionController extends Controller
         //
     }
 
-    public function voirMissionForId () {
+    public function voirMissionForId()
+    {
         $missionsForId = Mission::all()->where('organisation_id', request('id'));
         return view('voirMissionsForId')->with(['missionsForId' => $missionsForId, 'organisation_id' => request('id')]);
     }
 
-    public function getInfoMissionForDevis() {
+    public function getInfoMissionForDevis()
+    {
         $missionInfo = Mission::find(request('id_mission'));
         $organisationInfo = Organisation::find($missionInfo->organisation_id);
         $missionLinesInfo = MissionLine::where('mission_id', request('id_mission'))->get();
@@ -112,15 +118,17 @@ class MissionController extends Controller
         return view('imprimerDevis')->with(['missionInfo' => $missionInfo, 'organisationInfo' => $organisationInfo, 'missionLinesInfos' => $missionLinesInfo, 'sum_total' => $sum_total]);
     }
 
-    public function getInfoMissionForDeposit() {
+    public function getInfoMissionForDeposit()
+    {
         $missionInfo = Mission::find(request('id_mission'));
         $organisationInfo = Organisation::find($missionInfo->organisation_id);
         $missionLinesInfo = MissionLine::where('mission_id', request('id_mission'))->get();
-        
+
         return view('imprimerFactureAccompte')->with(['missionInfo' => $missionInfo, 'organisationInfo' => $organisationInfo, 'missionLinesInfos' => $missionLinesInfo]);
     }
 
-    public function getInfoMissionForSolde() {
+    public function getInfoMissionForSolde()
+    {
         $missionInfo = Mission::find(request('id_mission'));
         $organisationInfo = Organisation::find($missionInfo->organisation_id);
         $missionLinesInfo = MissionLine::where('mission_id', request('id_mission'))->get();
@@ -129,11 +137,12 @@ class MissionController extends Controller
             $sum_total = $sum_total + $mission->price * $mission->quantity;
         }
         $solde = $sum_total - $missionInfo->deposit;
-        
+
         return view('imprimerFactureSolde')->with(['missionInfo' => $missionInfo, 'organisationInfo' => $organisationInfo, 'missionLinesInfos' => $missionLinesInfo, 'solde' => $solde]);
     }
 
-    public function getInfoMissionForInvoice() {
+    public function getInfoMissionForInvoice()
+    {
         $missionInfo = Mission::find(request('id_mission'));
         $organisationInfo = Organisation::find($missionInfo->organisation_id);
         $missionLinesInfo = MissionLine::where('mission_id', request('id_mission'))->get();
@@ -143,5 +152,41 @@ class MissionController extends Controller
         }
 
         return view('imprimerFacture')->with(['missionInfo' => $missionInfo, 'organisationInfo' => $organisationInfo, 'missionLinesInfos' => $missionLinesInfo, 'sum_total' => $sum_total]);
+    }
+
+    public function missionFormUpdate()
+    {
+        $mission = Mission::find(request('id'));
+        return view('formUpdateMission')->with(['mission' => $mission]);
+    }
+
+    public function updateMission()
+    {
+        $mission = Mission::find(request('id'));
+        $organisation_id = $mission->organisation_id;
+
+        $mission->reference = request('reference');
+        $mission->title = request('title');
+        $mission->comment = request('comment');
+        $mission->deposit = request('deposit');
+        $mission->ended_at = request('ended_at');
+
+        $mission->save();
+
+        $missions = Mission::where('organisation_id', $organisation_id)->get();
+        return view('voirMissionsForId')->with(['missionsForId' => $missions, 'organisation_id' => $organisation_id]);
+    }
+
+    public function deleteMission()
+    {
+        $mission = Mission::find(request('id'));
+        $organisation_id = $mission->organisation_id;
+        $mission->delete();
+        $missionLines = MissionLine::where('mission_id', request('id'))->get();
+        foreach ($missionLines as $missionLine) {
+            $missionLine->delete();
+        }
+        $missions = Mission::where('organisation_id', $organisation_id)->get();
+        return view('voirMissionsForId')->with(['missionsForId' => $missions, 'organisation_id' => $organisation_id]);
     }
 }

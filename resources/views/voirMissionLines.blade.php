@@ -165,8 +165,8 @@
 </head>
 
 <body>
-    <button class="goback" onclick="window.location.href='/organisations/missions/{{ $organisation_id }}'" >Retour</button>
-<br>
+    <button class="goback" onclick="window.location.href='/organisations/missions/{{ $organisation_id }}'">Retour</button>
+    <br>
     <p class="page-title">LISTE DES LIGNES MISSIONS</p>
 
     <button class="addLignes" onclick="window.location.href='/organisations/missions/ajoutLigneMission/{{ $mission_id }}'">Ajouter lignes de missions</button>

@@ -15,6 +15,22 @@
             margin-top: 5%;
         }
 
+        .goback {
+            background-color: lightblue;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 1% 2%;
+            margin-top: 2.5%;
+            width: 10%;
+            float: right;
+        }
+
+        .goback:hover {
+            background-color: black;
+            color: white;
+            transition: 200ms;
+        }
+
         .addMission {
             background-color: lightblue;
             border: 2px solid black;
@@ -58,11 +74,11 @@
 
         .title,
         .comment {
-            width: 20%;
+            width: 15%;
         }
 
         .option {
-            width: 40%;
+            width: 50%;
         }
 
         table button {
@@ -80,8 +96,7 @@
         .edit {
             border: 2px solid orange;
             color: orange;
-            margin-left: 1.25%;
-            margin-right: 2.5%;
+            margin-left: 2.5%;
         }
 
         .edit:hover {
@@ -93,6 +108,7 @@
         .delete {
             border: 2px solid red;
             color: red;
+            margin-left: 2.5%;
         }
 
         .delete:hover {
@@ -168,8 +184,6 @@
         .invoiceBtn {
             padding: 1.25% 2.5%;
             margin-left: 2.5%;
-            margin-top: 2.5%;
-            margin-bottom: 2.5%;
             border: 2px solid black;
             color: black;
         }
@@ -182,15 +196,13 @@
             color: white;
             transition: 200ms;
         }
-
-        .devisBtn {
-            margin-left: 10%;
-        }
     </style>
 </head>
 
 <body>
-    <p class="page-title" >LISTE DES MISSIONS</p>
+    <button class="goback" onclick="window.location.href='/organisations'">Retour</button>
+    <br>
+    <p class="page-title">LISTE DES MISSIONS</p>
     <button class="addMission" onclick="window.location.href = '/organisations/ajoutMissions/{{$organisation_id}}'">Ajout de missions</button>
 
     <table>
@@ -210,23 +222,16 @@
             <td class="option">
                 <!--a href="/organisations/missions/ajoutLigneMission/{{ $mission->id }}" >Ajouter ligne de mission</a-->
                 <button class="listLignes" onclick="window.location.href='/organisations/missions/lignesMission/{{ $mission->id }}'">Voir lignes de missions</button>
-                <button class="print" onclick="document.getElementById('modal').style.display='block'">Imprimer ...</button>
-                <button class="edit" onclick="window.location.href=''">Éditer</button>
-                <button class="delete" onclick="window.location.href=''">Supprimer</button>
+                <button class="devisBtn" onclick="window.location.href='/organisations/missions/imprimerDevis/{{ $mission->id }}'">Devis</button>
+                <button class="depositBtn" onclick="window.location.href='/organisations/missions/imprimerFactureAccompte/{{ $mission->id }}'">Accompte</button>
+                <button class="soldeBtn" onclick="window.location.href='/organisations/missions/imprimerFactureSolde/{{ $mission->id }}'">Solde</button>
+                <button class="invoiceBtn" onclick="window.location.href='/organisations/missions/imprimerFacture/{{ $mission->id }}'">Facture</button>
+                <button class="edit" onclick="window.location.href='/organisations/modifierMission/{{ $mission->id }}'">Éditer</button>
+                <button class="delete" onclick="window.location.href='/organisations/supprimerMission/{{ $mission->id }}'">Supprimer</button>
             </td>
         </tr>
         @endforeach
     </table>
-    <div id="modal" class="modal">  
-        <div class="modal-content">
-            <p class="modal-header" >CHOISISSEZ VOTRE IMPRESSION</p>
-            <button class="closeBtn" onclick="document.getElementById('modal').style.display='none'">X</button>
-            <button class="devisBtn" onclick="window.location.href='/organisations/missions/imprimerDevis/{{ $mission->id }}'">Imprimer devis</button>
-            <button class="depositBtn" onclick="window.location.href='/organisations/missions/imprimerFactureAccompte/{{ $mission->id }}'">Imprimer facture d'accompte</button>
-            <button class="soldeBtn" onclick="window.location.href='/organisations/missions/imprimerFactureSolde/{{ $mission->id }}'">Imprimer facture de solde</button>
-            <button class="invoiceBtn" onclick="window.location.href='/organisations/missions/imprimerFacture/{{ $mission->id }}'">Imprimer facture</button>
-        </div>
-    </div>
 </body>
 
 </html>

@@ -61,6 +61,11 @@ Route::get('/organisations/missions/imprimerFactureSolde/{id_mission}', [Mission
 
 Route::get('/organisations/missions/imprimerFacture/{id_mission}', [MissionController::class, 'getInfoMissionForInvoice']);
 
+Route::get('/organisations/supprimerMission/{id}', [MissionController::class, 'deleteMission']);
+
+Route::get('/organisations/modifierMission/{id}', [MissionController::class, 'missionFormUpdate']);
+
+Route::post('/organisations/modifierMission/{id}', [MissionController::class, 'updateMission']);
 
 
 /*
