@@ -33,9 +33,15 @@ Route::get('/ajoutOrganisations', function() {
     return view('formAddOrganisation');
 });
 
-Route::post('/ajoutOrganisations', 'App\Http\Controllers\OrganisationController@addOrganisation');
+Route::post('/ajoutOrganisations', [OrganisationController::class, 'addOrganisation']);
 
 Route::get('/organisations', [OrganisationController::class, 'organisations'])->name('organisations');
+
+Route::get('/supprimerOrganisation/{id}', [OrganisationController::class, 'deleteOrganisation']);
+
+Route::get('/modifierOrganisation/{id}', [OrganisationController::class, 'organisationFormUpdate']);
+
+Route::post('/modifierOrganisation/{id}', [OrganisationController::class, 'updateOrganisation']);
 
 
 

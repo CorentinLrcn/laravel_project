@@ -127,8 +127,8 @@
             <td class="type">{{ $organisation->type }}</td>
             <td class="option">
                 <button class="listMission" onclick="window.location.href = '/organisations/missions/{{$organisation->id}}'">Voir missions</button>
-                <button class="edit" onclick="">Éditer</button>
-                <button class="delete" onclick="">Supprimer</button>
+                <button class="edit" onclick="window.location.href='/modifierOrganisation/{{ $organisation->id }}'">Éditer</button>
+                <button class="delete" onclick="window.location.href='/supprimerOrganisation/{{ $organisation->id }}'">Supprimer</button>
             </td>
         </tr>
         @endforeach

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mission;
+use App\Models\MissionLine;
 use App\Models\Organisation;
 use Illuminate\Http\Request;
 
 class OrganisationController extends Controller
 {
 
-    public function organisations() {
+    public function organisations()
+    {
         $organisations = Organisation::all();
         return view('organisations')->with('organisations', $organisations);
     }
@@ -89,7 +92,8 @@ class OrganisationController extends Controller
         //
     }
 
-    public function addOrganisation() {
+    public function addOrganisation()
+    {
         $organisation = new Organisation;
         $organisation->name = request('name');
         $organisation->slug = request('slug');
@@ -97,9 +101,51 @@ class OrganisationController extends Controller
         $organisation->tel = request('tel');
         $organisation->address = request('address');
         $organisation->type = request('type');
-    
+
         $organisation->save();
-    
-        return 'Votre organisation est enregistrée';
+
+        $organisations = Organisation::all();
+
+        return view('organisations')->with('organisations', $organisations);
+    }
+
+    public function organisationFormUpdate()
+    {
+        $organisation = Organisation::find(request('id'));
+        return view('formUpdateOrganisation')->with('organisation', $organisation);
+    }
+
+    public function updateOrganisation()
+    {
+        $organisation = Organisation::find(request('id'));
+        $organisation->name = request('name');
+        $organisation->slug = request('slug');
+        $organisation->email = request('email');
+        $organisation->tel = request('tel');
+        $organisation->address = request('address');
+        $organisation->type = request('type');
+        $organisation->save();
+
+        $organisations = Organisation::all();
+
+        return view('organisations')->with('organisations', $organisations);
+    }
+
+    public function deleteOrganisation()
+    {
+        $organisation = Organisation::find(request('id'));
+        $missions = Mission::where('organisation_id', request('id'))->get();
+        foreach ($missions as $mission) {
+            $missionLines = MissionLine::where('mission_id', $mission->id)->get();
+            foreach($missionLines as $missionLine) {
+                $missionLine->delete();
+            }
+            $mission->delete();
+        }
+        $organisation->delete();
+
+        $organisations = Organisation::all();
+
+        return view('organisations')->with('organisations', $organisations);
     }
 }
