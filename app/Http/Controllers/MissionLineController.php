@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mission;
 use App\Models\MissionLine;
 use Illuminate\Http\Request;
 
@@ -93,6 +94,9 @@ class MissionLineController extends Controller
     {
         $missionLines = new MissionLine;
         $missionLines->mission_id = request('id');
+        $mission_id = request('id');
+        $mission = Mission::find(request('id'));
+        $organisation_id = $mission->organisation_id;
         $missionLines->title = request('title');
         $missionLines->quantity = request('quantity');
         $missionLines->price = request('price');
@@ -100,11 +104,44 @@ class MissionLineController extends Controller
 
         $missionLines->save();
 
-        return 'Ligne de mission ajoutée';
+        $missionLines = MissionLine::where('mission_id', $mission_id)->get();
+        return view('voirMissionLines')->with(['missionLines' => $missionLines, 'mission_id' => $mission_id, 'organisation_id' => $organisation_id]);
     }
 
     public function voirLignesMission() {
+        $mission = Mission::find(request('id'));
+        $organisation_id = $mission->organisation_id;
         $missionLines = MissionLine::where('mission_id', request('id'))->get();
-        return view('voirMissionLines')->with(['missionLines' => $missionLines, 'mission_id' => request('id')]);
+        return view('voirMissionLines')->with(['missionLines' => $missionLines, 'mission_id' => request('id'), 'organisation_id' => $organisation_id]);
+    }
+
+    public function missionLineFormUpdate() {
+        $missionLine = MissionLine::find(request('id'));
+        return view('formUpdateMissionLines')->with(['missionLine' => $missionLine]);
+    }
+
+    public function updateMissionLine() {
+        $missionLine = MissionLine::find(request('id'));
+        $mission_id = $missionLine->mission_id;
+        $mission = Mission::find($mission_id);
+        $organisation_id = $mission->organisation_id;
+        $missionLine->title = request('title');
+        $missionLine->quantity = request('quantity');
+        $missionLine->price = request('price');
+        $missionLine->unity = request('unity');
+        $missionLine->save();
+
+        $missionLine = MissionLine::where('mission_id', $mission_id)->get();
+        return view('voirMissionLines')->with(['missionLines' => $missionLine, 'mission_id' => $mission_id, 'organisation_id' => $organisation_id]);
+    }
+
+    public function deleteMissionLine() {
+        $missionLine = MissionLine::find(request('id'));
+        $mission_id = $missionLine->mission_id;
+        $mission = Mission::find($mission_id);
+        $organisation_id = $mission->organisation_id;
+        $missionLine->delete();
+        $missionLine = MissionLine::where('mission_id', $mission_id)->get();
+        return view('voirMissionLines')->with(['missionLines' => $missionLine, 'mission_id' => $mission_id, 'organisation_id' => $organisation_id]);
     }
 }
