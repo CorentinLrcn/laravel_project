@@ -73,7 +73,7 @@
 
 <body>
     <div class="encart-utilisateur">
-        M.Laurencine Corentin
+        M. / Mme.
         <br>
         Prestataire indépendant
     </div>
@@ -117,7 +117,7 @@
             <td></td>
             <td></td>
             <td>Total accompte</td>
-            <td>{{ $missionInfo->deposit }} EUR</td>
+            <td>{{ $deposit }} EUR</td>
         </tr>
     </table>
     <div class="fin-page">

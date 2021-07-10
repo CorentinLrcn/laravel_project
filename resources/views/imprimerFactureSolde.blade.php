@@ -73,7 +73,7 @@
 
 <body>
     <div class="encart-utilisateur">
-        M.Laurencine Corentin
+        M. / Mme.
         <br>
         Prestataire indépendant
     </div>

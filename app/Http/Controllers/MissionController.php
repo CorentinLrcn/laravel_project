@@ -123,8 +123,13 @@ class MissionController extends Controller
         $missionInfo = Mission::find(request('id_mission'));
         $organisationInfo = Organisation::find($missionInfo->organisation_id);
         $missionLinesInfo = MissionLine::where('mission_id', request('id_mission'))->get();
+        $sum_total = 0;
+        foreach ($missionLinesInfo as $mission) {
+            $sum_total = $sum_total + $mission->price * $mission->quantity;
+        }
+        $deposit = $sum_total * $missionInfo->deposit / 100;
 
-        return view('imprimerFactureAccompte')->with(['missionInfo' => $missionInfo, 'organisationInfo' => $organisationInfo, 'missionLinesInfos' => $missionLinesInfo]);
+        return view('imprimerFactureAccompte')->with(['missionInfo' => $missionInfo, 'organisationInfo' => $organisationInfo, 'missionLinesInfos' => $missionLinesInfo, 'deposit' => $deposit]);
     }
 
     public function getInfoMissionForSolde()
@@ -136,7 +141,7 @@ class MissionController extends Controller
         foreach ($missionLinesInfo as $mission) {
             $sum_total = $sum_total + $mission->price * $mission->quantity;
         }
-        $solde = $sum_total - $missionInfo->deposit;
+        $solde = $sum_total - ($sum_total * $missionInfo->deposit / 100);
 
         return view('imprimerFactureSolde')->with(['missionInfo' => $missionInfo, 'organisationInfo' => $organisationInfo, 'missionLinesInfos' => $missionLinesInfo, 'solde' => $solde]);
     }
