@@ -4,6 +4,7 @@ use App\Http\Controllers\ContributionController;
 use App\Http\Controllers\MissionController;
 use App\Http\Controllers\MissionLineController;
 use App\Http\Controllers\OrganisationController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,7 +49,7 @@ Route::post('/modifierOrganisation/{id}', [OrganisationController::class, 'updat
 /*
 Routes pour les missions
 */
-Route::get('/missions','App\Http\Controllers\MissionController@missions')->name('missions');
+Route::get('/missions', [MissionController::class, 'missions'])->name('missions');
 
 Route::get('/organisations/ajoutMissions/{id}', function() {
     $id = request('id');
@@ -77,7 +78,7 @@ Route::post('/organisations/modifierMission/{id}', [MissionController::class, 'u
 /*
 Routes pour les lignes de missions
 */
-Route::get('/missionLines','App\Http\Controllers\MissionLineController@missionLines')->name('missionLines');
+Route::get('/missionLines', [MissionLineController::class, 'missionLines'])->name('missionLines');
 
 Route::get('/organisations/missions/ajoutLigneMission/{id}', function () {
     $id = request('id');
@@ -98,11 +99,11 @@ Route::post('/organisations/missions/modifierLigneMission/{id}', [MissionLineCon
 /*
 Routes pour les transactions
 */
-Route::get('/contributions', 'App\Http\Controllers\ContributionController@contributions')->name('contributions');
+Route::get('/contributions', [ContributionController::class ,'contributions'])->name('contributions');
 
 
 
 /*
 Routes pour les contributions
 */
-Route::get('/transactions', 'App\Http\Controllers\TransactionController@transactions')->name('transactions');
+Route::get('/transactions', [TransactionController::class , 'transactions'])->name('transactions');
