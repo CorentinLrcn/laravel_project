@@ -34,10 +34,28 @@
             width: 100%;
             text-align: center;
         }
+
+        .goback {
+            background-color: lightblue;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 1% 2%;
+            margin-top: 2.5%;
+            width: 10%;
+            float: right;
+        }
+
+        .goback:hover {
+            background-color: black;
+            color: white;
+            transition: 200ms;
+        }
     </style>
 </head>
 
 <body>
+    <button class="goback" onclick="window.location.href='/organisations/missions/lignesMission/{{ $id }}'">Retour</button>
+    <br>
     <p>AJOUT D'UNE LIGNE DE MISSION</p>
 
     <form action="/organisations/missions/ajoutLigneMission/{{$id}}" method="post">
@@ -62,11 +80,11 @@
         <label for="unity">Unité de mesure :</label>
         <br>
         <select id="unity" name="unity">
-            <option value="Heure(s)" >Heure(s)</option>
-            <option value="Seance(s)" >Seance(s)</option>
-            <option value="Jour(s)" >Jour(s)</option>
-            <option value="Semaine(s)" >Semaine(s)</option>
-            <option value="Mois" >Mois</option>
+            <option value="Heure(s)">Heure(s)</option>
+            <option value="Seance(s)">Seance(s)</option>
+            <option value="Jour(s)">Jour(s)</option>
+            <option value="Semaine(s)">Semaine(s)</option>
+            <option value="Mois">Mois</option>
         </select>
         <br>
         <br>

@@ -33,10 +33,28 @@
         textarea {
             width: 100%;
         }
+
+        .goback {
+            background-color: lightblue;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 1% 2%;
+            margin-top: 2.5%;
+            width: 10%;
+            float: right;
+        }
+
+        .goback:hover {
+            background-color: black;
+            color: white;
+            transition: 200ms;
+        }
     </style>
 </head>
 
 <body>
+    <button class="goback" onclick="window.location.href='/organisations/missions/{{ $mission->id }}'">Retour</button>
+    <br>
     <p>MODIFICATION D'UNE MISSION</p>
 
     <form action="/organisations/modifierMission/{{ $mission->id }}" method="post">
@@ -55,7 +73,7 @@
         <br>
         <label for="comment">Commentaire</label>
         <br>
-        <textarea name="comment" value={{ $mission->comment }} ></textarea>
+        <textarea name="comment" value={{ $mission->comment }}></textarea>
         <br>
         <br>
         <label for="deposit">Accompte de :</label>

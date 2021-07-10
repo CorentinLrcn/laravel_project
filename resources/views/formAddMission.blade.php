@@ -33,10 +33,28 @@
         textarea {
             width: 100%;
         }
+
+        .goback {
+            background-color: lightblue;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 1% 2%;
+            margin-top: 2.5%;
+            width: 10%;
+            float: right;
+        }
+
+        .goback:hover {
+            background-color: black;
+            color: white;
+            transition: 200ms;
+        }
     </style>
 </head>
 
 <body>
+    <button class="goback" onclick="window.location.href='/organisations/missions/{{ $id }}'">Retour</button>
+    <br>
     <p>AJOUT D'UNE MISSION</p>
 
     <form action="/organisations/ajoutMissions/{{$id}}" method="post">
